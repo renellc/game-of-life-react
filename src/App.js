@@ -30,7 +30,7 @@ export default class App extends Component {
     let ctx = canvas.getContext('2d');
 
     canvas.width = window.innerWidth * 0.9;
-    canvas.height = canvas.width / 2;
+    canvas.height = window.innerHeight;
 
     let squareWidth = canvas.width / this.state.width;
     let squareHeight = canvas.height / this.state.height;
