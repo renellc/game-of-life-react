@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 
 export default class App extends Component {
+  state = {
+    width: 30,
+    height: 20,
+    board: []
+  }
+
   componentDidMount() {
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
+    this.setState({ board: this.createBoard() });
+  }
 
-    ctx.canvas.style.width = '90%';
-
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.width / 3);
+  createBoard() {
+    let board = new Array();
+    for (let i = 0; i < this.state.height; i++) {
+      board.push(new Array(this.state.width).fill(0));
+    }
+    return board;
   }
 
   render() {
