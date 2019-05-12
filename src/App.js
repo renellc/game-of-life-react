@@ -34,8 +34,8 @@ export default class App extends Component {
   }
 
   startSimulation(speedFactor) {
-    let intervalId = setInterval(this.simulationCycle, 1000 * speedFactor);
-    this.setState({ simIntervalId : intervalId });
+    let intervalId = window.setInterval(this.simulationCycle, 1000 * speedFactor);
+    this.setState({ simIntervalId: intervalId, simRunning: true });
   }
 
   simulationCycle() {
@@ -70,6 +70,19 @@ export default class App extends Component {
     return neighborCount;
   }
 
+  pauseSimulation() {
+    const { simIntervalId } = this.state;
+    window.clearInterval(simIntervalId);
+    this.setState({ simRunning: false });
+  }
+
+  stopSimulation() {
+    let { simIntervalId, simRunning } = this.state;
+    window.clearInterval(simIntervalId);
+    simRunning = false;
+    this.setState({ simIntervalId, simRunning });
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -79,12 +92,34 @@ export default class App extends Component {
           </div>
         </div>
 
-        <div className="board mx-1 text-center">
+        <div className="board mx-1">
           <Board
             canvasClick={this.colorCell.bind(this)}
             board={this.state.board}
             width={this.state.width}
             height={this.state.height} />
+
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-3">
+                <label for="speed-control">Speed</label><br />
+                <input id="speed-control" type="range" min="1.0" max="4.0" step="0.1"></input>
+              </div>
+              <div className="col-md-3">
+                <div className="btn-group mt-2" role="group">
+                  <button type="button" class="btn btn-secondary" onClick={this.startSimulation.bind(this, 1.5)}>
+                    <i class="fas fa-play"></i> Start
+                  </button>
+                  <button type="button" class="btn btn-secondary" onClick={this.pauseSimulation.bind(this)}>
+                    <i class="fas fa-pause"></i> Pause
+                  </button>
+                  <button type="button" class="btn btn-secondary" onClick={this.stopSimulation.bind(this)}>
+                    <i class="fas fa-stop"></i> Stop
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
