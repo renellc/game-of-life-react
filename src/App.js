@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import './App.css'
 
 export default class App extends Component {
-  state = {
-    width: 50,
-    height: 50,
-    board: this.createBoard()
+  constructor(props) {
+    super(props);
+    let width = 45;
+    this.state = {
+      width: width,
+      height: Math.round(width / 1.8),
+      board: this.createBoard(width)
+    };
   }
 
-  createBoard() {
+  createBoard(startingWidth) {
     let board = [];
-    for (let i = 0; i < 50; i++) {
-      board.push(new Array(50).fill(false));
+    for (let i = 0; i < startingWidth; i++) {
+      board.push(new Array(Math.round(startingWidth / 1.4)).fill(false));
     }
     return board;
   }
@@ -31,15 +34,13 @@ export default class App extends Component {
             <h1 className="display-4">Conway's Game of Life</h1>
           </div>
         </div>
-        
-        <div className="row text-center">
-          <div className="col-12">
-            <Board
-              canvasClick={this.colorCell.bind(this)}
-              board={this.state.board}
-              width={this.state.width}
-              height={this.state.height} />
-          </div>
+
+        <div className="board mx-1 text-center">
+          <Board
+            canvasClick={this.colorCell.bind(this)}
+            board={this.state.board}
+            width={this.state.width}
+            height={this.state.height} />
         </div>
       </div>
     );

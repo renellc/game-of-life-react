@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Board.css';
 
 export default class Board extends Component {
   constructor(props) {
@@ -10,9 +11,7 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
-    let canvas = document.getElementById('canvas');
-    canvas.width = window.innerWidth * 0.75;
-    canvas.height = canvas.width;
+    let canvas = this.initializeBoard();
 
     this.setState({
       cellWidth: canvas.width / this.props.width,
@@ -22,6 +21,14 @@ export default class Board extends Component {
       this.drawBoard(board, width, height);
       canvas.addEventListener('click', ev => this.getClickCoords(ev));
     });
+  }
+
+  initializeBoard() {
+    let canvas = document.getElementById('canvas');
+    let parent = canvas.parentElement;
+    canvas.width = parent.offsetWidth * 0.8;
+    canvas.height = canvas.width / 2;
+    return canvas;
   }
 
   getClickCoords(ev) {
