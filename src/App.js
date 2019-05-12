@@ -5,19 +5,20 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     let width = 45;
+    let heightRatio = 1.8;
     this.state = {
       width: width,
-      height: Math.floor(width / 1.8),
+      height: Math.floor(width / heightRatio),
       board: this.createBoard(width),
       simIntervalId: null,
       simRunning: false
     };
   }
 
-  createBoard(startingWidth) {
+  createBoard(startingWidth, heightRatio) {
     let board = [];
     for (let i = 0; i < startingWidth; i++) {
-      board.push(new Array(Math.floor(startingWidth / 1.8)).fill(false));
+      board.push(new Array(Math.floor(startingWidth / heightRatio)).fill(false));
     }
     return board;
   }
