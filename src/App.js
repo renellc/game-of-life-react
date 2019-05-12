@@ -26,6 +26,29 @@ export default class App extends Component {
     this.setState({ board: board });
   }
 
+  willCellLive(currCellX, currCellY) {
+    const { board, width, height } = this.state;
+    let neighborCount = 0;
+
+    for (let x = currCellX - 1; x <= x + 1; x++) {
+      for (let y = currCellY - 1; y <= y + 1; y++) {
+        const withinXBounds = x >= 0 && x <= width;
+        const withinYBounds = y >= 0 && y <= height;
+        if (withinXBounds && withinYBounds) {
+          neighborCount = board[x][y] === 0 ? neighborCount : neighborCount + 1;
+        }
+      }
+    }
+
+    if (board[currCellX][currCellY] === 0) {
+      return neighborCount === 3;
+    }
+
+    if (board[currCellX][currCellY] === 1) {
+      return neighborCount === 2 || neighborCount === 3;
+    }
+  }
+
   render() {
     return (
       <div className="container-fluid">
