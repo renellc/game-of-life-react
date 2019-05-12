@@ -5,7 +5,14 @@ export default class BoardControl extends Component {
     return (
       <div className="container-fluid">
         <label htmlFor="speed-control">Speed: </label>
-        <input id="speed-control" type="range" min="1.0" max="4.0" step="0.1" defaultValue="1.0"></input>
+        <input
+          id="speed-control"
+          type="range"
+          min="1.0"
+          max="10.0"
+          step="0.1"
+          defaultValue="1.0"
+          onInput={this.props.speedControl}></input>
         <br />
 
         <div className="btn-group mt-2" role="group">

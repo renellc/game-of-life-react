@@ -10,8 +10,9 @@ export default class App extends Component {
     this.height = Math.floor(this.width / this.heightRatio);
     this.state = {
       board: this.createBoard(),
+      simRunning: false,
       simIntervalId: null,
-      simRunning: false
+      simSpeedFactor: 1
     };
   }
 
@@ -24,10 +25,11 @@ export default class App extends Component {
   }
 
   startSimulation = () => {
+    const { simSpeedFactor } = this.state;
     let intervalId = window.setInterval(() => {
       const newBoard = this.simulateGeneration();
       this.setState({ board: newBoard });
-    }, 1000);
+    }, 750 / simSpeedFactor);
     this.setState({ simIntervalId: intervalId, simRunning: true });
   }
 
@@ -87,6 +89,13 @@ export default class App extends Component {
     this.setState({ board });
   }
 
+  changeSpeedFactor = (ev) => {
+    this.setState({ simSpeedFactor: ev.target.value }, () => {
+      this.stopSimulation();
+      this.startSimulation();
+    });
+  }
+
   render = () => {
     return (
       <div className="container-fluid">
@@ -103,7 +112,8 @@ export default class App extends Component {
             width={this.width}
             height={this.height} />
 
-          <BoardControl 
+          <BoardControl
+            speedControl={this.changeSpeedFactor}
             start={this.startSimulation}
             stop={this.stopSimulation}
             clear={this.clearBoard} />
