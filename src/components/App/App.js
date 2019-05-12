@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from '../Board/Board';
+import SimControls from '../SimControls/SimControls';
 
 export default class App extends Component {
   constructor(props) {
@@ -111,17 +112,9 @@ export default class App extends Component {
                 <input id="speed-control" type="range" min="1.0" max="4.0" step="0.1"></input>
               </div>
               <div className="col-md-3">
-                <div className="btn-group mt-2" role="group">
-                  <button type="button" className="btn btn-primary" onClick={this.startSimulation.bind(this)}>
-                    <i className="fas fa-play"></i> Start
-                  </button>
-                  <button type="button" className="btn btn-secondary" onClick={this.pauseSimulation.bind(this)}>
-                    <i className="fas fa-pause"></i> Pause
-                  </button>
-                  <button type="button" className="btn btn-danger" onClick={this.stopSimulation.bind(this)}>
-                    <i className="fas fa-stop"></i> Stop
-                  </button>
-                </div>
+                <SimControls start={this.startSimulation.bind(this)}
+                  pause={this.pauseSimulation.bind(this)}
+                  stop={this.stopSimulation.bind(this)} />
               </div>
             </div>
           </div>
