@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from '../Board/Board';
-import SimControls from '../SimControls/SimControls';
+import BoardControl from '../BoardControl/BoardControl';
 
 export default class App extends Component {
   constructor(props) {
@@ -105,7 +105,7 @@ export default class App extends Component {
             width={this.state.width}
             height={this.state.height} />
 
-          <SimControls 
+          <BoardControl 
             start={this.startSimulation.bind(this)}
             pause={this.pauseSimulation.bind(this)}
             stop={this.stopSimulation.bind(this)} />
