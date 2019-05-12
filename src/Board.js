@@ -14,10 +14,17 @@ export default class Board extends Component {
     canvas.width = window.innerWidth * 0.75;
     canvas.height = canvas.width;
 
+
     this.setState({
       cellWidth: canvas.width / this.props.width,
       cellHeight: canvas.height / this.props.height
     }, () => {
+      canvas.addEventListener('click', (ev) => {
+        let cellPosX = Math.floor(ev.offsetX / this.state.cellWidth);
+        let cellPosY = Math.floor(ev.offsetY / this.state.cellHeight);
+        this.props.canvasClick(cellPosX, cellPosY);
+      });
+
       let { board, width, height } = this.props;
       this.drawBoard(board, width, height);
     });
@@ -36,7 +43,7 @@ export default class Board extends Component {
 
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < height; y++) {
-        ctx.fillStyle = board[x][y] === 0 ? 'white' : 'blue';
+        ctx.fillStyle = !board[x][y] ? 'white' : 'blue';
         ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth - 1, cellHeight - 1);
       }
     }

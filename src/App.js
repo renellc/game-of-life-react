@@ -12,9 +12,17 @@ export default class App extends Component {
   createBoard() {
     let board = [];
     for (let i = 0; i < 50; i++) {
-      board.push(new Array(50).fill(0));
+      board.push(new Array(50).fill(false));
     }
     return board;
+  }
+
+  colorCell(x, y) {
+    let board = this.state.board;
+    board[x][y] = !board[x][y];
+    this.setState({
+      board: board
+    });
   }
 
   render() {
@@ -27,7 +35,7 @@ export default class App extends Component {
         </div>
         <div className="row text-center">
           <div className="col-12">
-            <Board board={this.state.board} width={this.state.width} height={this.state.height} />
+            <Board canvasClick={this.colorCell.bind(this)}board={this.state.board} width={this.state.width} height={this.state.height} />
           </div>
         </div>
       </div>
