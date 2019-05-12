@@ -9,7 +9,8 @@ export default class App extends Component {
       width: width,
       height: Math.round(width / 1.8),
       board: this.createBoard(width),
-      simIntervalId: null
+      simIntervalId: null,
+      simRunning: false
     };
   }
 
@@ -22,6 +23,11 @@ export default class App extends Component {
   }
 
   colorCell(coords) {
+    let { simRunning } = this.state;
+    if (simRunning) {
+      return;
+    }
+
     let board = this.state.board;
     board[coords.x][coords.y] = !board[coords.x][coords.y];
     this.setState({ board: board });
