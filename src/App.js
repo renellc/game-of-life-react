@@ -8,7 +8,8 @@ export default class App extends Component {
     this.state = {
       width: width,
       height: Math.round(width / 1.8),
-      board: this.createBoard(width)
+      board: this.createBoard(width),
+      simIntervalId: null
     };
   }
 
@@ -26,7 +27,28 @@ export default class App extends Component {
     this.setState({ board: board });
   }
 
-  willCellLive(currCellX, currCellY) {
+  startSimulation(speedFactor) {
+    let intervalId = setInterval(this.simulationCycle, 1000 * speedFactor);
+    this.setState({ simIntervalId : intervalId });
+  }
+
+  simulationCycle() {
+    let { board } = this.state;
+    const { width, height } = this.state;
+    for (let x = 0; x < width; x++) {
+      for (let y = 0; y < height; y++) {
+        let neighborCount = this.getCellNeighborCount(x, y);
+        if (board[x][y]) {
+          board[x][y] = !(neighborCount < 2 || neighborCount > 3);
+        } else {
+          board[x][y] = neighborCount === 3;
+        }
+      }
+    }
+    this.setState({ board: board });
+  }
+
+  getCellNeighborCount(currCellX, currCellY) {
     const { board, width, height } = this.state;
     let neighborCount = 0;
 
@@ -35,18 +57,11 @@ export default class App extends Component {
         const withinXBounds = x >= 0 && x <= width;
         const withinYBounds = y >= 0 && y <= height;
         if (withinXBounds && withinYBounds) {
-          neighborCount = board[x][y] === 0 ? neighborCount : neighborCount + 1;
+          neighborCount = board[x][y] ? neighborCount + 1 : neighborCount;
         }
       }
     }
-
-    if (board[currCellX][currCellY] === 0) {
-      return neighborCount === 3;
-    }
-
-    if (board[currCellX][currCellY] === 1) {
-      return neighborCount === 2 || neighborCount === 3;
-    }
+    return neighborCount;
   }
 
   render() {
