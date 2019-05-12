@@ -76,17 +76,11 @@ export default class App extends Component {
     return neighborCount;
   }
 
-  pauseSimulation() {
-    const { simIntervalId } = this.state;
-    window.clearInterval(simIntervalId);
-    this.setState({ simRunning: false });
-  }
-
   stopSimulation() {
     let { simIntervalId, simRunning } = this.state;
     window.clearInterval(simIntervalId);
     simRunning = false;
-    this.setState({ simIntervalId, simRunning });
+    this.setState({ simRunning });
   }
 
   render() {
@@ -107,7 +101,6 @@ export default class App extends Component {
 
           <BoardControl 
             start={this.startSimulation.bind(this)}
-            pause={this.pauseSimulation.bind(this)}
             stop={this.stopSimulation.bind(this)} />
         </div>
       </div>
