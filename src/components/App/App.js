@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Board from './Board';
+import Board from '../Board/Board';
 
 export default class App extends Component {
   constructor(props) {
