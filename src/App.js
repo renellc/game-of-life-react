@@ -17,12 +17,10 @@ export default class App extends Component {
     return board;
   }
 
-  colorCell(x, y) {
+  colorCell(coords) {
     let board = this.state.board;
-    board[x][y] = !board[x][y];
-    this.setState({
-      board: board
-    });
+    board[coords.x][coords.y] = !board[coords.x][coords.y];
+    this.setState({ board: board });
   }
 
   render() {
@@ -33,9 +31,14 @@ export default class App extends Component {
             <h1 className="display-4">Conway's Game of Life</h1>
           </div>
         </div>
+        
         <div className="row text-center">
           <div className="col-12">
-            <Board canvasClick={this.colorCell.bind(this)}board={this.state.board} width={this.state.width} height={this.state.height} />
+            <Board
+              canvasClick={this.colorCell.bind(this)}
+              board={this.state.board}
+              width={this.state.width}
+              height={this.state.height} />
           </div>
         </div>
       </div>

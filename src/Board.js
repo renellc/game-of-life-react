@@ -14,20 +14,20 @@ export default class Board extends Component {
     canvas.width = window.innerWidth * 0.75;
     canvas.height = canvas.width;
 
-
     this.setState({
       cellWidth: canvas.width / this.props.width,
       cellHeight: canvas.height / this.props.height
     }, () => {
-      canvas.addEventListener('click', (ev) => {
-        let cellPosX = Math.floor(ev.offsetX / this.state.cellWidth);
-        let cellPosY = Math.floor(ev.offsetY / this.state.cellHeight);
-        this.props.canvasClick(cellPosX, cellPosY);
-      });
-
       let { board, width, height } = this.props;
       this.drawBoard(board, width, height);
+      canvas.addEventListener('click', ev => this.getClickCoords(ev));
     });
+  }
+
+  getClickCoords(ev) {
+    let x = Math.floor(ev.offsetX / this.state.cellWidth);
+    let y = Math.floor(ev.offsetY / this.state.cellHeight);
+    this.props.canvasClick({ x, y });
   }
 
   drawBoard(board, width, height) {
