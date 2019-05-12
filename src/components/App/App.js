@@ -105,19 +105,10 @@ export default class App extends Component {
             width={this.state.width}
             height={this.state.height} />
 
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-3">
-                <label htmlFor="speed-control">Speed</label><br />
-                <input id="speed-control" type="range" min="1.0" max="4.0" step="0.1"></input>
-              </div>
-              <div className="col-md-3">
-                <SimControls start={this.startSimulation.bind(this)}
-                  pause={this.pauseSimulation.bind(this)}
-                  stop={this.stopSimulation.bind(this)} />
-              </div>
-            </div>
-          </div>
+          <SimControls 
+            start={this.startSimulation.bind(this)}
+            pause={this.pauseSimulation.bind(this)}
+            stop={this.stopSimulation.bind(this)} />
         </div>
       </div>
     );
