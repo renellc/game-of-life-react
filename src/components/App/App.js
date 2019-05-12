@@ -15,7 +15,7 @@ export default class App extends Component {
     };
   }
 
-  createBoard() {
+  createBoard = () => {
     let board = [];
     for (let i = 0; i < this.width; i++) {
       board.push(new Array(Math.floor(this.height)).fill(false));
@@ -23,7 +23,7 @@ export default class App extends Component {
     return board;
   }
 
-  startSimulation() {
+  startSimulation = () => {
     let intervalId = window.setInterval(() => {
       const newBoard = this.simulateGeneration();
       this.setState({ board: newBoard });
@@ -31,7 +31,7 @@ export default class App extends Component {
     this.setState({ simIntervalId: intervalId, simRunning: true });
   }
 
-  simulateGeneration() {
+  simulateGeneration = () => {
     let { board } = this.state;
     let newBoard = this.createBoard();
 
@@ -46,7 +46,7 @@ export default class App extends Component {
     return newBoard;
   }
 
-  getCellNeighborCount(currCellX, currCellY) {
+  getCellNeighborCount = (currCellX, currCellY) => {
     const { board } = this.state;
     let neighborCount = 0;
 
@@ -64,7 +64,7 @@ export default class App extends Component {
     return neighborCount;
   }
 
-  colorCell(coords) {
+  colorCell = (coords) => {
     let { simRunning } = this.state;
     if (simRunning) {
       return;
@@ -75,14 +75,19 @@ export default class App extends Component {
     this.setState({ board: board });
   }
 
-  stopSimulation() {
-    let { simIntervalId, simRunning } = this.state;
+  stopSimulation = () => {
+    const { simIntervalId } = this.state;
     window.clearInterval(simIntervalId);
-    simRunning = false;
-    this.setState({ simRunning });
+    this.setState({ simRunning: false });
   }
 
-  render() {
+  clearBoard = () => {
+    this.stopSimulation();
+    const board = this.createBoard();
+    this.setState({ board });
+  }
+
+  render = () => {
     return (
       <div className="container-fluid">
         <div className="row text-center my-3">
@@ -93,14 +98,15 @@ export default class App extends Component {
 
         <div className="board mx-1">
           <Board
-            canvasClick={this.colorCell.bind(this)}
+            canvasClick={this.colorCell}
             board={this.state.board}
             width={this.width}
             height={this.height} />
 
           <BoardControl 
-            start={this.startSimulation.bind(this)}
-            stop={this.stopSimulation.bind(this)} />
+            start={this.startSimulation}
+            stop={this.stopSimulation}
+            clear={this.clearBoard} />
         </div>
       </div>
     );

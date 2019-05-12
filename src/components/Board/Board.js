@@ -10,7 +10,7 @@ export default class Board extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     let canvas = this.initializeBoard();
 
     this.setState({
@@ -23,7 +23,7 @@ export default class Board extends Component {
     });
   }
 
-  initializeBoard() {
+  initializeBoard = () => {
     let canvas = document.getElementById('canvas');
     let parent = canvas.parentElement;
     canvas.width = parent.offsetWidth * 0.8;
@@ -31,13 +31,13 @@ export default class Board extends Component {
     return canvas;
   }
 
-  getClickCoords(ev) {
+  getClickCoords = (ev) => {
     let x = Math.floor(ev.offsetX / this.state.cellWidth);
     let y = Math.floor(ev.offsetY / this.state.cellHeight);
     this.props.canvasClick({ x, y });
   }
 
-  drawBoard(board, width, height) {
+  drawBoard = (board, width, height) => {
     if (!document.getElementById('canvas')) {
       return;
     }
@@ -56,7 +56,7 @@ export default class Board extends Component {
     }
   }
 
-  render() {
+  render = () => {
     let { board, width, height } = this.props;
     this.drawBoard(board, width, height);
     return (

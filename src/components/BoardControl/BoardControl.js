@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export default class BoardControl extends Component {
-  render() {
+  render = () => {
     return (
       <div className="container-fluid">
         <label htmlFor="speed-control">Speed: </label>
@@ -15,6 +15,10 @@ export default class BoardControl extends Component {
 
           <button type="button" className="btn btn-danger" onClick={this.props.stop}>
             <i className="fas fa-stop"></i> Stop
+          </button>
+
+          <button type="button" className="btn btn-secondary" onClick={this.props.clear}>
+            <i className="fas fa-stop"></i> Clear
           </button>
         </div>
       </div>
