@@ -8,8 +8,9 @@ export default class App extends Component {
     let heightRatio = 1.8;
     this.state = {
       width: width,
+      heightRatio: heightRatio,
       height: Math.floor(width / heightRatio),
-      board: this.createBoard(width),
+      board: this.createBoard(width, heightRatio),
       simIntervalId: null,
       simRunning: false
     };
@@ -37,8 +38,8 @@ export default class App extends Component {
   startSimulation() {
     let intervalId = window.setInterval(() => {
       let { board } = this.state;
-      const { width, height } = this.state;
-      let newBoard = this.createBoard(width);
+      const { width, height, heightRatio } = this.state;
+      let newBoard = this.createBoard(width, heightRatio);
 
       for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
