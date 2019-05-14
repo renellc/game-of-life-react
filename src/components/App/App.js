@@ -37,10 +37,11 @@ export default class App extends Component {
    */
   startSimulation = () => {
     const { simSpeedFactor } = this.state;
+    const simSpeed = 750 / simSpeedFactor;
     let intervalId = window.setInterval(() => {
       const newBoard = this.simulateGeneration();
       this.setState({ board: newBoard });
-    }, 750 / simSpeedFactor);
+    }, simSpeed);
     this.setState({ simIntervalId: intervalId, simRunning: true });
   }
 
@@ -139,9 +140,12 @@ export default class App extends Component {
    * @param {Object} ev The event generated from an HTML element.
    */
   changeSpeedFactor = (ev) => {
+    const { simRunning } = this.state;
     this.setState({ simSpeedFactor: ev.target.value }, () => {
-      this.stopSimulation();
-      this.startSimulation();
+      if (simRunning) {
+        this.stopSimulation();
+        this.startSimulation();
+      }
     });
   }
 
